@@ -8,7 +8,7 @@
         </div>
         <div class="card-body">
             <p class="card-text">{{ $data->description }}</p>
-            <a href="/{{ $data->id }}" class="btn btn-primary btn-sm">Go Detail</a>
+            <a href="/posts/{{ $data->id }}" class="btn btn-primary btn-sm">Go Detail</a>
         </div>
     </div>    
     @endforeach

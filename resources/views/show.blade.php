@@ -7,7 +7,7 @@
         </div>
         <div class="card-body">
             <p class="card-text">{{ $data->description }}</p>
-            <a href="/" class="btn btn-danger btn-sm float-end">Go Back</a>
+            <a href="/posts" class="btn btn-danger btn-sm float-end">Go Back</a>
         </div>
     </div>    
 </div>
