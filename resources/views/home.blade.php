@@ -1,6 +1,8 @@
 @extends('layout')
 @section('content')
-<a href="{{ route('home') }}" class="btn btn-primary btn-sm ms-3" style="margin-top:-50px;">Go To Home Path</a>
+{{-- <a href="{{ route('home') }}" class="btn btn-primary btn-sm ms-3" style="margin-top:-50px;">Go To Home Path</a> --}}
+<p class="ms-3 h4" style="margin-top:-50px; font-weight: bold;">{{ Auth::user()->name }}</p>
+<a href="logout" class="btn btn-danger btn-sm ms-3 float-end" style="margin-top:-50px; margin-right: 140px;">Logout</a>
 <a href="posts/create" class="btn btn-success btn-sm float-end me-3" style="margin-top:-50px;">+ Add New Post</a>
 <div style="width: 45rem; margin: 0px auto !important;">
     @foreach ($datas as $data)

@@ -15,6 +15,12 @@
                     <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" id="title" value="{{old('title', $post->title)}}">
                     <label for="" class="mt-3 mb-2">Description</label>
                     <textarea class="form-control @error('description') is-invalid @enderror" rows="3" name="description" id="description">{{ $post->description }}</textarea>
+                    <label for="" class="mt-3 mb-2">Category</label>
+                    <select class="form-select" name="category_id" id="category_id">
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" {{ $category->id == $post->category_id ? 'selected' : '' }}>{{ $category->name }}</option>
+                        @endforeach
+                    </select>
                 </div><br>
                 @if ($errors->any())
                     <div class="alert alert-danger">

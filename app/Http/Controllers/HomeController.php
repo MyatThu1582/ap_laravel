@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\storePostRequest;
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class HomeController extends Controller
 {
+    protected $redirectTo = '/posts';
     /**
      * Display a listing of the resource.
      */
@@ -17,7 +21,8 @@ class HomeController extends Controller
      }
      public function index()
     {
-        $datas = Post::orderBy('id', 'desc')->get();
+        $id = auth()->id();
+        $datas = Post::where('id', $id)->orderBy('id', 'desc')->get();
         return view("home", compact("datas"));
     }
 
@@ -26,7 +31,8 @@ class HomeController extends Controller
      */
     public function create()
     {
-        return view("create");
+        $categories = Category::orderBy('id', 'desc')->get();
+        return view("create", compact("categories"));
     }
 
     /**
@@ -35,7 +41,6 @@ class HomeController extends Controller
     public function store(storePostRequest $request)
     {
         $credentials = $request->validated();
-
         Post::create($credentials);
         return redirect('/posts');
     }
@@ -45,7 +50,9 @@ class HomeController extends Controller
      */
     public function show(Post $post)
     {
-        // $data = Post::findOrFail( $id);
+        // Authorizing the update action based on the 'PostPolicy'
+        Gate::authorize('update', $post); // Manually authorize access
+        
         return view("show", compact("post"));
     }
 
@@ -54,8 +61,10 @@ class HomeController extends Controller
      */
     public function edit(Post $post)
     {
+        Gate::authorize('update', $post); // Manually authorize access
         // $data = Post::findOrFail( $id);
-        return view('edit', compact('post'));
+        $categories = Category::orderBy('id', 'desc')->get();
+        return view('edit', compact('post', 'categories'));
     }
 
     /**

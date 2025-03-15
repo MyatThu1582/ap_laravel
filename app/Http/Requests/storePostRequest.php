@@ -22,18 +22,19 @@ class storePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "title"=> "required|unique:posts|max:255",
+            "title"=> "required|max:255",
             "description"=> "required|max:255",
+            "category_id"=> "required",
         ];
     }
     public function messages(): array
     {
         return [
             'title.required' => 'A title is required',
-            'title.unique:posts' => 'A message is required',
             'title.max:255' => 'A title is too long',
             'description.required' => 'A description is required',
             'description.max:255' => 'A description is too long',
+            'category_id.required'=> 'A category is required',
         ];
     }
 }
