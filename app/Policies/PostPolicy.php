@@ -22,7 +22,7 @@ class PostPolicy
     public function view(User $user, Post $post): bool
     {
         // return false;
-        return $user->id === $post->user_id;
+        return $user->id === $post->user_id || $user->id === 1;
     }
 
     /**
@@ -38,7 +38,8 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        return false;
+        // return false;
+        return $user->id === $post->user_id;
     }
 
     /**

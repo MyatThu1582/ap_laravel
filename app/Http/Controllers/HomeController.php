@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Test;
 
 class HomeController extends Controller
 {
@@ -21,6 +22,8 @@ class HomeController extends Controller
      }
      public function index()
     {
+        // $posts = Post::pluck('title');
+        // dd($posts);
         $id = auth()->id();
         $datas = Post::where('id', $id)->orderBy('id', 'desc')->get();
         return view("home", compact("datas"));
@@ -48,11 +51,11 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Post $post, Test $test)
     {
+        dd($test);
         // Authorizing the update action based on the 'PostPolicy'
-        Gate::authorize('update', $post); // Manually authorize access
-        
+        Gate::authorize('view', $post); // Manually authorize access
         return view("show", compact("post"));
     }
 
