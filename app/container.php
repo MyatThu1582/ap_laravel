@@ -4,13 +4,11 @@ namespace App;
 
 class Container
 {
-    protected $items = [];
-    public function bild($key, $value)
-    {
-        $this->items[$key] = $value;
+    protected $binding = [];
+    public function bind($key, $value){
+        $this->binding[$key] = $value;
     }
-    public function resolve($key)
-    {
-        return call_user_func($this->items[$key]);
+    public function resolve($key){
+        return call_user_func($this->binding[$key]);
     }
 }

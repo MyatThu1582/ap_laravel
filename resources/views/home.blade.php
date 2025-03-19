@@ -5,6 +5,12 @@
 <a href="logout" class="btn btn-danger btn-sm ms-3 float-end" style="margin-top:-50px; margin-right: 140px;">Logout</a>
 <a href="posts/create" class="btn btn-success btn-sm float-end me-3" style="margin-top:-50px;">+ Add New Post</a>
 <div style="width: 45rem; margin: 0px auto !important;">
+    @if (session('status'))
+    <div class="alert alert-info alert-dismissible fade show mt-5 ms-5" role="alert" style="width: 39rem;">
+        <strong>{{ session('status') }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>    
+    @endif
     @foreach ($datas as $data)
     <div class="card m-5">
         <div class="card-header text-center">

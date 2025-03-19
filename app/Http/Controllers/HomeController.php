@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Test;
 
@@ -24,8 +25,13 @@ class HomeController extends Controller
     {
         // $posts = Post::pluck('title');
         // dd($posts);
+
+        // Mail::raw('Hello World', function($msg){
+        //    $msg->to('neo@gmail.com')->subject('AP Test Mail'); 
+        // });
+
         $id = auth()->id();
-        $datas = Post::where('id', $id)->orderBy('id', 'desc')->get();
+        $datas = Post::where('user_id', $id)->orderBy('id', 'desc')->get();
         return view("home", compact("datas"));
     }
 
@@ -44,8 +50,11 @@ class HomeController extends Controller
     public function store(storePostRequest $request)
     {
         $credentials = $request->validated();
-        Post::create($credentials);
-        return redirect('/posts');
+        $credentials['user_id'] = auth()->id();
+        $post = Post::create($credentials);
+
+        // Mail::to('myatthu1582.ygn@gmail.com')->send(new PostCreated($post));
+        return redirect('/posts')->with('status', config('aprogrammar.message.created'));
     }
 
     /**
@@ -53,7 +62,6 @@ class HomeController extends Controller
      */
     public function show(Post $post, Test $test)
     {
-        dd($test);
         // Authorizing the update action based on the 'PostPolicy'
         Gate::authorize('view', $post); // Manually authorize access
         return view("show", compact("post"));
@@ -75,12 +83,14 @@ class HomeController extends Controller
      */
     public function update(storePostRequest $request, Post $post)
     {
-        // $id = $request->id();
         $credentials = $request->validated();
-
+        $crefentials['user_id'] = auth()->id();
         $post->update($credentials);
         // Post::Where('id', $post->id)->Update($credentials);
-        return redirect('/posts');
+
+        // Mail::to('myatthu1582.ygn@gmail.com')->send(new PostEdited($post));
+
+        return redirect('/posts')->with('status', 'Post Updated successfully!');
     }
 
     /**
