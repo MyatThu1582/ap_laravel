@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Listeners;
+
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use App\Events\PostCreatedEvent;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PostCreated;
+
+class PostCreatedListener
+{
+    /**
+     * Create the event listener.
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     */
+    public function handle(PostCreatedEvent $event): void
+    {
+        Mail::to('myatthu1582.ygn@gmail.com')->send(new PostCreated($event->post));
+    }
+}

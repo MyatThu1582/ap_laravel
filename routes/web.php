@@ -13,7 +13,9 @@ Route::get('logout', [AuthController::class, 'logout']);
 // Route::get('home', [HomeController::class, 'testroot'])->name('home');
 
 Route::get('/', function(){
-    dd(config('aprogrammar.message.created'));
+    // dd(config('aprogrammar.message.created'));
     //  return TestFacades::smt();
     // dd(resolve('test')->smt('Neo'));
+
+    return view('testwelcome');
 });

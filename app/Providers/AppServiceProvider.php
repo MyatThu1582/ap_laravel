@@ -7,6 +7,9 @@ use App\Models\Post;
 use App\Policies\PostPolicy;
 use Illuminate\Support\Facades\Gate;
 use App\Test;
+use Illuminate\Support\Facades\Event;
+use App\Events\PostCreatedEvent;
+use App\Listeners\PostCreatedListener;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +18,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        
+        Event::listen(
+            PostCreatedEvent::class,
+            PostCreatedListener::class,
+        );
     }
 
     /**
